@@ -1,9 +1,5 @@
 import { UpdateDateColumn, CreateDateColumn } from 'typeorm';
 
-/**
- * in sqlite there is no date types
- * so I'll store them as string but look at the example below
- */
 export class SharedProp {
   @CreateDateColumn({
     default: () => 'CURRENT_TIMESTAMP',
