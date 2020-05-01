@@ -17,12 +17,13 @@ const app = async () => {
   // Creates database schema for all entities registered in this connection.
   // Can be used only after connection to the database is established.
   // pass true to drop everything b4 creating anything
-  await connection.synchronize();
+  await connection.synchronize(true);
   const u = new UserEntity();
   u.birthDate = new Date();
   u.firstName = 'rowad';
   u.lastName = 'z';
   u.isActive = true;
+  u.password = `${Math.random()}`;
   const entityManager = getManager();
   await entityManager.save(u);
 };
