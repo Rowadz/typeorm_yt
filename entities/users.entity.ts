@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { SharedProp } from './sharedProp.helper';
 
-@Entity()
+@Entity({ name: 'users' })
 export class UserEntity extends SharedProp {
   @PrimaryGeneratedColumn()
   id: number;
@@ -14,6 +14,9 @@ export class UserEntity extends SharedProp {
 
   @Column({ name: 'is_active', nullable: false })
   isActive: boolean;
+
+  @Column({ unique: true })
+  email: string;
 
   @Column({ name: 'birth_date', type: 'date', nullable: false })
   birthDate: Date;
