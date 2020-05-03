@@ -2,9 +2,8 @@ import { Connection } from 'typeorm';
 import { name, internet, random, date, lorem } from 'faker';
 import { UserEntity, PostsEntity } from '../entities';
 
-const users: Array<UserEntity> = [];
-
 const createUsers = async (con: Connection) => {
+  const users: Array<UserEntity> = [];
   for (const _ of Array.from({ length: 10 })) {
     const firstName = name.firstName();
     const lastName = name.lastName();
@@ -22,10 +21,10 @@ const createUsers = async (con: Connection) => {
     );
     users.push((await con.manager.save(user)) as UserEntity);
   }
-  await createPosts(con);
+  await createPosts(con, users);
 };
 
-const createPosts = async (con: Connection) => {
+const createPosts = async (con: Connection, users: Array<UserEntity>) => {
   for (const user of users) {
     const body = lorem.paragraphs();
     const post1: Partial<PostsEntity> = new PostsEntity(body);
