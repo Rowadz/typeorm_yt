@@ -21,6 +21,8 @@ export class PostsEntity extends SharedProp {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
+  // `JoinColumn` can be used on both one-to-one and many-to-one relations to specify custom column name
+  // or custom referenced column.
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 }
