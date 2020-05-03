@@ -10,6 +10,9 @@ export class PostsEntity extends SharedProp {
   @Column({ nullable: false, type: 'text' })
   body: string;
 
-  @OneToMany(() => UserEntity, (user: UserEntity) => user.posts)
+  @OneToMany(() => UserEntity, (user: UserEntity) => user.posts, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
 }

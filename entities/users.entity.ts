@@ -35,6 +35,5 @@ export class UserEntity extends SharedProp {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'user_id' })
   posts: Array<PostsEntity>;
 }
