@@ -1,6 +1,11 @@
 import { Connection, Repository } from 'typeorm';
-import { name, internet, random, date, lorem } from 'faker';
-import { UserEntity, PostsEntity } from '../entities';
+import { name, internet, random, date, lorem, hacker } from 'faker';
+import {
+  UserEntity,
+  PostsEntity,
+  CategoriesEntity,
+  CategoriesPostsEntity,
+} from '../entities';
 import { writeFileSync } from 'fs';
 
 const createUsers = async (con: Connection) => {
@@ -26,16 +31,51 @@ const createUsers = async (con: Connection) => {
 };
 
 const createPosts = async (con: Connection, users: Array<UserEntity>) => {
+  const posts: Array<PostsEntity> = [];
   for (const user of users) {
     const body = lorem.paragraphs();
     const post1: Partial<PostsEntity> = new PostsEntity(body);
     const post2: Partial<PostsEntity> = new PostsEntity(body);
     post1.user = user;
     post2.user = user;
-    await con.manager.save(post1);
-    await con.manager.save(post2);
+    posts.push((await con.manager.save(post1)) as PostsEntity);
+    posts.push((await con.manager.save(post2)) as PostsEntity);
   }
   await readUsers(con);
+  await manyToManyCreate(con, posts);
+};
+
+const manyToManyCreate = async (con: Connection, posts: Array<PostsEntity>) => {
+  await createCat(con);
+  const categoriesRepository: Repository<CategoriesEntity> = con.getRepository(
+    CategoriesEntity
+  );
+  const categoriesPostsRepository: Repository<CategoriesPostsEntity> = con.getRepository(
+    CategoriesPostsEntity
+  );
+  const categories = await categoriesRepository.find();
+  for (const post of posts) {
+    const someColumn = hacker.adjective();
+    const catPost = new CategoriesPostsEntity(
+      someColumn,
+      post,
+      random.arrayElement(categories)
+    );
+    await categoriesPostsRepository.save(catPost);
+  }
+};
+
+const createCat = async (con: Connection) => {
+  const categoriesRepository: Repository<CategoriesEntity> = con.getRepository(
+    CategoriesEntity
+  );
+  for (const _ of Array.from({ length: 10 })) {
+    const label = hacker.verb();
+    const categoryToSave: Partial<CategoriesEntity> = new CategoriesEntity(
+      label
+    );
+    await categoriesRepository.save(categoryToSave);
+  }
 };
 
 const readUsers = async (con: Connection) => {
