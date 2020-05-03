@@ -1,14 +1,7 @@
-import {
-  Connection,
-  Repository,
-  LessThanOrEqual,
-  LessThan,
-  Raw,
-} from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { name, internet, random, date, lorem } from 'faker';
 import { UserEntity, PostsEntity } from '../entities';
 import { writeFileSync } from 'fs';
-import { userInfo } from 'os';
 
 const createUsers = async (con: Connection) => {
   const users: Array<UserEntity> = [];
