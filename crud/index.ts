@@ -1,1 +1,1 @@
-export { createData } from './createData.crud';
+export { createUsers } from './createData.crud';
