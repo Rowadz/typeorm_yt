@@ -17,10 +17,7 @@ export class PostsEntity extends SharedProp {
   body: string;
 
   // pass () => UserEntity or just a string 'UserEntity' <--- name of the class
-  @ManyToOne(() => UserEntity, (user: UserEntity) => user.posts, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.posts)
   // `JoinColumn` can be used on both one-to-one and many-to-one relations to specify custom column name
   // or custom referenced column.
   @JoinColumn({ name: 'user_id' })
