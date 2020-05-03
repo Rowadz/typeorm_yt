@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { createConnection, Connection } from 'typeorm';
 import { UserEntity, PostsEntity } from './entities';
 import { getManager } from 'typeorm';
+import { createData } from './crud/';
 
 const app = async () => {
   const connection = await createConnection({
@@ -18,15 +19,7 @@ const app = async () => {
   // Can be used only after connection to the database is established.
   // pass true to drop everything b4 creating anything
   await connection.synchronize(true);
-  const u = new UserEntity();
-  u.birthDate = new Date();
-  u.firstName = 'rowad';
-  u.lastName = 'z';
-  u.isActive = true;
-  u.email = 'test@test.com';
-  u.password = `${Math.random()}`;
-  const entityManager = getManager();
-  await entityManager.save(u);
+  await createData(connection);
 };
 
 app();
