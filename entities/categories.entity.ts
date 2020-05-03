@@ -12,6 +12,10 @@ import { CategoriesPostsEntity } from './categoriesPosts.entity';
 
 @Entity({ name: 'categories' })
 export class CategoriesEntity extends SharedProp {
+  constructor(label: string) {
+    super();
+    this.label = label;
+  }
   @PrimaryGeneratedColumn()
   id: number;
 
