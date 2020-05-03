@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { createConnection, Connection } from 'typeorm';
 import { UserEntity, PostsEntity } from './entities';
-import { createData } from './crud/';
+import { createUsers } from './crud/';
 
 const app = async () => {
   const connection: Connection = await createConnection({
@@ -18,7 +18,7 @@ const app = async () => {
   // Can be used only after connection to the database is established.
   // pass true to drop everything b4 creating anything
   await connection.synchronize(true);
-  await createData(connection);
+  await createUsers(connection);
 };
 
 app();
