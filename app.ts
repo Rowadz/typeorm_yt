@@ -1,13 +1,13 @@
 import 'reflect-metadata';
 import { createConnection, Connection } from 'typeorm';
-import { UserEntity } from './entities';
+import { UserEntity, PostsEntity } from './entities';
 import { getManager } from 'typeorm';
 
 const app = async () => {
   const connection = await createConnection({
     type: 'sqlite',
     database: './db/testing_typeorm.db',
-    entities: [UserEntity],
+    entities: [UserEntity, PostsEntity],
     // host: 'localhost',
     // port: 3306,
     // username: 'test',
@@ -23,6 +23,7 @@ const app = async () => {
   u.firstName = 'rowad';
   u.lastName = 'z';
   u.isActive = true;
+  u.email = 'test@test.com';
   u.password = `${Math.random()}`;
   const entityManager = getManager();
   await entityManager.save(u);
