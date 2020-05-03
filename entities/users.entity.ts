@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { SharedProp } from './sharedProp.helper';
+import { PostsEntity } from './posts.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends SharedProp {
@@ -23,4 +30,11 @@ export class UserEntity extends SharedProp {
 
   @Column({ nullable: false })
   password: string;
+
+  @ManyToOne(() => PostsEntity, (post: PostsEntity) => post.user, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'user_id' })
+  posts: Array<PostsEntity>;
 }
