@@ -1,8 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { SharedProp } from './sharedProp.helper';
 import { UserEntity } from './users.entity';
 
-@Entity()
+@Entity({ name: 'posts' })
 export class PostsEntity extends SharedProp {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,9 +16,10 @@ export class PostsEntity extends SharedProp {
   @Column({ nullable: false, type: 'text' })
   body: string;
 
-  @OneToMany(() => UserEntity, (user: UserEntity) => user.posts, {
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.posts, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 }
