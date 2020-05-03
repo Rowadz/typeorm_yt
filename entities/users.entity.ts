@@ -25,6 +25,7 @@ export class UserEntity extends SharedProp {
   @Column({ nullable: false })
   password: string;
 
+  // pass () => PostsEntity or just a string 'PostsEntity' <--- name of the class
   @OneToMany(() => PostsEntity, (post: PostsEntity) => post.user, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
