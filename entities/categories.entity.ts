@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { SharedProp } from './sharedProp.helper';
+import { CategoriesPostsEntity } from './categoriesPosts.entity';
 
 // postgresql example enum
 // enum CategoriesLabels {
@@ -24,4 +25,10 @@ export class CategoriesEntity extends SharedProp {
   //     default: CategoriesLabels.programming,
   //   })
   //   label: string;
+
+  @OneToMany(
+    () => CategoriesPostsEntity,
+    (categoriesPosts: CategoriesPostsEntity) => categoriesPosts.category
+  )
+  categoriesPosts: Array<CategoriesPostsEntity>;
 }
