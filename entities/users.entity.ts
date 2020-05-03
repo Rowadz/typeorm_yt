@@ -9,6 +9,7 @@ export class UserEntity extends SharedProp {
     lastName: string,
     isActive: boolean,
     email: string,
+    birthDate: Date,
     password: string
   ) {
     super();
@@ -16,6 +17,7 @@ export class UserEntity extends SharedProp {
     this.lastName = lastName;
     this.isActive = isActive;
     this.email = email;
+    this.birthDate = birthDate;
     this.password = password;
   }
   @PrimaryGeneratedColumn()
