@@ -16,6 +16,7 @@ export class PostsEntity extends SharedProp {
   @Column({ nullable: false, type: 'text' })
   body: string;
 
+  // pass () => UserEntity or just a string 'UserEntity' <--- name of the class
   @ManyToOne(() => UserEntity, (user: UserEntity) => user.posts, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
