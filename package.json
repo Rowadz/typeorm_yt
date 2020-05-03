@@ -11,11 +11,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/faker": "^4.1.11",
+    "@types/node": "^13.13.4",
     "ts-node": "^8.9.1",
-    "typescript": "^3.8.3",
-    "@types/node": "^13.13.4"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
+    "faker": "^4.1.0",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^4.2.0",
     "typeorm": "^0.2.24"
