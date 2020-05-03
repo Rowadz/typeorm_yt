@@ -1,11 +1,10 @@
 import 'reflect-metadata';
 import { createConnection, Connection } from 'typeorm';
 import { UserEntity, PostsEntity } from './entities';
-import { getManager } from 'typeorm';
 import { createData } from './crud/';
 
 const app = async () => {
-  const connection = await createConnection({
+  const connection: Connection = await createConnection({
     type: 'sqlite',
     database: './db/testing_typeorm.db',
     entities: [UserEntity, PostsEntity],
