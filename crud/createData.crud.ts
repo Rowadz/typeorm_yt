@@ -53,7 +53,7 @@ const manyToManyCreate = async (con: Connection, posts: Array<PostsEntity>) => {
   const categoriesPostsRepository: Repository<CategoriesPostsEntity> = con.getRepository(
     CategoriesPostsEntity
   );
-  const categories = await categoriesRepository.find();
+  const categories: Array<CategoriesEntity> = await categoriesRepository.find();
   for (const post of posts) {
     const someColumn = hacker.adjective();
     const catPost = new CategoriesPostsEntity(
