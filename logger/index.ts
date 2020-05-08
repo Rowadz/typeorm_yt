@@ -1,1 +1,1 @@
-export { CustomerLogger } from './customLogger';
+export { CustomeLogger } from './customLogger';
