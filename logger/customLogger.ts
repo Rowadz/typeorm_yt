@@ -1,7 +1,33 @@
 import { Logger, QueryRunner } from 'typeorm';
+import {
+  createLogger,
+  Logger as WinstonLogger,
+  transports,
+  format,
+} from 'winston';
+import { Format } from 'logform';
 
 export class CustomerLogger implements Logger {
-  logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {}
+  private readonly queryLogger: WinstonLogger;
+  private readonly customFormat: Format;
+  constructor() {
+    this.customFormat = format.printf(
+      ({ level, message, label, timestamp }) =>
+        `${timestamp} [${label}] ${level}: ${message}`
+    );
+    this.queryLogger = createLogger({
+      transports: [new transports.File({ filename: 'logQuery.txt' })],
+      format: format.combine(this.customFormat),
+    });
+  }
+  logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
+    this.queryLogger.log({
+      level: 'debug',
+      message: `${query} - ${JSON.stringify(parameters)}`,
+      timestamp: Date.now(),
+      label: 'query',
+    });
+  }
 
   logQueryError(
     error: string,
@@ -21,9 +47,7 @@ export class CustomerLogger implements Logger {
     throw new Error('Method not implemented.');
   }
 
-  logSchemaBuild(message: string, queryRunner?: QueryRunner) {
-    throw new Error('Method not implemented.');
-  }
+  logSchemaBuild(message: string, queryRunner?: QueryRunner) {}
 
   logMigration(message: string, queryRunner?: QueryRunner) {
     throw new Error('Method not implemented.');
