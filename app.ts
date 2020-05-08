@@ -7,7 +7,7 @@ import {
   CategoriesPostsEntity,
 } from './entities';
 import { createUsers } from './crud/';
-import { CustomerLogger } from './logger';
+import { CustomeLogger } from './logger';
 
 const app = async () => {
   const connection: Connection = await createConnection({
