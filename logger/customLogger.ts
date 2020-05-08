@@ -5,18 +5,18 @@ import {
   transports,
   format,
 } from 'winston';
-import { Format } from 'logform';
+// import { Format } from 'logform';
 
-export class CustomerLogger implements Logger {
+export class CustomeLogger implements Logger {
   private readonly queryLogger: WinstonLogger;
   private readonly schemaLogger: WinstonLogger;
-  private readonly customFormat: Format;
+  private readonly customFormat: any;
   constructor() {
     this.customFormat = format.printf(
       ({ level, message, label, timestamp }) =>
         `${timestamp} [${label}] ${level}: ${message}`
     );
-    const options = (filename) => ({
+    const options = (filename: string) => ({
       transports: new transports.File({
         filename,
         level: 'debug',
@@ -24,11 +24,7 @@ export class CustomerLogger implements Logger {
       format: this.customFormat,
     });
     this.queryLogger = createLogger(options('query.log'));
-
     this.schemaLogger = createLogger(options('schema.log'));
-
-    this.queryLogger.on('error', () => console.error(':('));
-    this.queryLogger.error = (err) => void console.error(err);
   }
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
     this.queryLogger.log({
