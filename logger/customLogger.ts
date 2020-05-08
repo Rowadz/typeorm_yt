@@ -16,9 +16,15 @@ export class CustomerLogger implements Logger {
         `${timestamp} [${label}] ${level}: ${message}`
     );
     this.queryLogger = createLogger({
-      transports: [new transports.File({ filename: 'logQuery.txt' })],
-      format: format.combine(this.customFormat),
+      transports: new transports.File({
+        filename: 'query.log',
+        level: 'debug',
+      }),
+      format: this.customFormat,
     });
+
+    this.queryLogger.on('error', () => console.error(':('));
+    this.queryLogger.error = (err) => void console.error(err);
   }
   logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
     this.queryLogger.log({
@@ -47,7 +53,9 @@ export class CustomerLogger implements Logger {
     throw new Error('Method not implemented.');
   }
 
-  logSchemaBuild(message: string, queryRunner?: QueryRunner) {}
+  logSchemaBuild(message: string, queryRunner?: QueryRunner) {
+    // throw new Error('Method not implemented.');
+  }
 
   logMigration(message: string, queryRunner?: QueryRunner) {
     throw new Error('Method not implemented.');
