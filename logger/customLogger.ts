@@ -9,19 +9,23 @@ import { Format } from 'logform';
 
 export class CustomerLogger implements Logger {
   private readonly queryLogger: WinstonLogger;
+  private readonly schemaLogger: WinstonLogger;
   private readonly customFormat: Format;
   constructor() {
     this.customFormat = format.printf(
       ({ level, message, label, timestamp }) =>
         `${timestamp} [${label}] ${level}: ${message}`
     );
-    this.queryLogger = createLogger({
+    const options = (filename) => ({
       transports: new transports.File({
-        filename: 'query.log',
+        filename,
         level: 'debug',
       }),
       format: this.customFormat,
     });
+    this.queryLogger = createLogger(options('query.log'));
+
+    this.schemaLogger = createLogger(options('schema.log'));
 
     this.queryLogger.on('error', () => console.error(':('));
     this.queryLogger.error = (err) => void console.error(err);
@@ -54,7 +58,12 @@ export class CustomerLogger implements Logger {
   }
 
   logSchemaBuild(message: string, queryRunner?: QueryRunner) {
-    // throw new Error('Method not implemented.');
+    this.schemaLogger.log({
+      level: 'debug',
+      message,
+      timestamp: Date.now(),
+      label: 'schema',
+    });
   }
 
   logMigration(message: string, queryRunner?: QueryRunner) {
