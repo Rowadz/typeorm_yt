@@ -20,7 +20,7 @@ const app = async () => {
       CategoriesPostsEntity,
     ],
     logging: true,
-    logger: new CustomerLogger(),
+    logger: new CustomeLogger(),
     // host: 'localhost',
     // port: 3306,
     // username: 'test',
