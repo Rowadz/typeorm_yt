@@ -7,6 +7,7 @@ import {
   CategoriesPostsEntity,
 } from './entities';
 import { createUsers } from './crud/';
+import { CustomerLogger } from './logger';
 
 const app = async () => {
   const connection: Connection = await createConnection({
@@ -18,6 +19,8 @@ const app = async () => {
       CategoriesEntity,
       CategoriesPostsEntity,
     ],
+    logging: true,
+    logger: new CustomerLogger(),
     // host: 'localhost',
     // port: 3306,
     // username: 'test',
