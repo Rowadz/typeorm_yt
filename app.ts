@@ -1,13 +1,13 @@
-import 'reflect-metadata';
-import { createConnection, Connection } from 'typeorm';
+import 'reflect-metadata'
+import { createConnection, Connection } from 'typeorm'
 import {
   UserEntity,
   PostsEntity,
   CategoriesEntity,
   CategoriesPostsEntity,
-} from './entities';
-import { createUsers } from './crud/';
-import { CustomeLogger } from './logger';
+} from './entities'
+import { createUsers } from './crud/'
+import { CustomeLogger } from './logger'
 
 const app = async () => {
   const connection: Connection = await createConnection({
@@ -26,12 +26,12 @@ const app = async () => {
     // username: 'test',
     // password: 'test',
     // database: 'test',
-  });
+  })
   // Creates database schema for all entities registered in this connection.
   // Can be used only after connection to the database is established.
   // pass true to drop everything b4 creating anything
-  await connection.synchronize(true).catch(console.error);
-  await createUsers(connection);
-};
+  await connection.synchronize(false).catch(console.error)
+  await createUsers(connection)
+}
 
-app();
+app()

@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { SharedProp } from './sharedProp.helper';
-import { PostsEntity } from './posts.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { SharedProp } from './sharedProp.helper'
+import { PostsEntity } from './posts.entity'
 
 @Entity({ name: 'users' })
 export class UserEntity extends SharedProp {
@@ -12,39 +12,42 @@ export class UserEntity extends SharedProp {
     birthDate: Date,
     password: string
   ) {
-    super();
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.isActive = isActive;
-    this.email = email;
-    this.birthDate = birthDate;
-    this.password = password;
+    super()
+    this.firstName = firstName
+    this.lastName = lastName
+    this.isActive = isActive
+    this.email = email
+    this.birthDate = birthDate
+    this.password = password
   }
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({ name: 'first_name', nullable: false })
-  firstName: string;
+  firstName: string
 
   @Column({ name: 'last_name', nullable: false })
-  lastName: string;
+  lastName: string
 
   @Column({ name: 'is_active', nullable: false })
-  isActive: boolean;
+  isActive: boolean
+
+  @Column()
+  random: string
 
   @Column({ unique: true })
-  email: string;
+  email: string
 
   @Column({ name: 'birth_date', type: 'date', nullable: false })
-  birthDate: Date;
+  birthDate: Date
 
   @Column({ nullable: false })
-  password: string;
+  password: string
 
   // pass () => PostsEntity or just a string 'PostsEntity' <--- name of the class
   @OneToMany(() => PostsEntity, (post: PostsEntity) => post.user, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  posts: Array<PostsEntity>;
+  posts: Array<PostsEntity>
 }

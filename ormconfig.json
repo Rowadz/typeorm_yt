@@ -1,0 +1,6 @@
+{
+  "type": "sqlite",
+  "database": "./db/testing_typeorm.db",
+  "entities": ["./entities/*.entity.ts"],
+  "migrations": ["./migrations/*.ts"]
+}
